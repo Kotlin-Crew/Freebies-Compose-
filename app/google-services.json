@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "760318864261",
+    "project_id": "freebies-144a1",
+    "storage_bucket": "freebies-144a1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760318864261:android:7c68af1de0d135fbcab2ec",
+        "android_client_info": {
+          "package_name": "com.kotlincrew.freebies"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2YcEcGwy9P4GW3qAcnuSApXzCqUjHL6M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
