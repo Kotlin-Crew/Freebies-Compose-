@@ -1,8 +1,8 @@
 package com.kotlincrew.freebies.auth.domain.usecase
 
-data class LoginUseCases(
-    val loginWithEmailUseCase: LoginWithEmailUseCase,
-    val validatePasswordUseCase: ValidatePasswordUseCase,
+data class SignupUseCases (
+    val signupWithEmailUseCase: SignupWithEmailUseCase,
     val validateEmailUseCase: ValidateEmailUseCase,
+    val validatePasswordUseCase: ValidatePasswordUseCase,
     val setRememberAccount : SetRememberAccountUseCase
 )

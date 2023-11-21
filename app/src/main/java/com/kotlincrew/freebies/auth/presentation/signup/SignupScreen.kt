@@ -1,16 +1,13 @@
-package com.kotlincrew.freebies.auth.presentation.login
+package com.kotlincrew.freebies.auth.presentation.signup
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,17 +32,16 @@ import com.kotlincrew.freebies.core.presentation.FreebiesPasswordTextField
 import com.kotlincrew.freebies.ui.theme.freebiesTitleFamily
 
 @Composable
-fun LoginScreen(
-    viewModel: LoginViewModel = hiltViewModel(),
-    onSignUp: () -> Unit,
-    onLogin: () -> Unit
+fun SignupScreen(
+    viewModel: SignupViewModel = hiltViewModel(),
+    onLogin: () -> Unit,
+    onSignIn: () -> Unit
 ) {
-
     val state = viewModel.state
 
-    LaunchedEffect(state.isLoogedIn) {
-        if (state.isLoogedIn) {
-            onLogin()
+    LaunchedEffect(state.isSignedIn){
+        if(state.isSignedIn){
+            onSignIn()
         }
     }
 
@@ -80,7 +76,7 @@ fun LoginScreen(
                             color = MaterialTheme.colorScheme.primary
                         )
                     ) {
-                        append(stringResource(R.string.login))
+                        append(stringResource(R.string.register))
                     }
                 }
             )
@@ -96,7 +92,7 @@ fun LoginScreen(
             FreebiesEmailTextField(
                 value = state.email,
                 errorMessage = state.emailError,
-                onValueChange = { viewModel.onEvent(LoginEvent.EmailChange(it)) })
+                onValueChange = { viewModel.onEvent(SignupEvent.EmailChange(it)) })
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 modifier = Modifier.align(Alignment.Start),
@@ -108,48 +104,25 @@ fun LoginScreen(
             FreebiesPasswordTextField(
                 value = state.password,
                 errorMessage = state.passwordError,
-                onValueChange = { viewModel.onEvent(LoginEvent.PasswordChange(it)) }
+                onValueChange = { viewModel.onEvent(SignupEvent.PasswordChange(it)) }
             )
-            Row(
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(0.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Checkbox(
-                    modifier = Modifier.absoluteOffset((-12).dp, 0.dp),
-                    checked = state.remember,
-                    onCheckedChange = { viewModel.onEvent(LoginEvent.RememberChange(it)) })
-                Text(
-                    modifier = Modifier.absoluteOffset((-12).dp, 0.dp),
-                    text = stringResource(R.string.remember_me),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.background
-                )
-            }
-            Text(
-                modifier = Modifier.align(Alignment.Start),
-                text = stringResource(R.string.forgot_password),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.background
-            )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(32.dp))
             FreebiesButton(
-                onClick = { viewModel.onEvent(LoginEvent.Login) },
-                text = stringResource(R.string.login_button),
+                onClick = { viewModel.onEvent(SignupEvent.SignUp) },
+                text = stringResource(R.string.sign_up),
                 size = 20
             )
             Spacer(modifier = Modifier.height(16.dp))
             FreebiesDivider()
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = stringResource(R.string.not_member),
+                text = stringResource(R.string.are_you_member),
                 color = MaterialTheme.colorScheme.secondary,
                 style = MaterialTheme.typography.bodyMedium
             )
             FreebiesButton(
-                onClick = { onSignUp() },
-                text = stringResource(R.string.sign_up),
+                onClick = { onLogin() },
+                text = stringResource(R.string.login_button),
                 size = 20
             )
         }
@@ -158,4 +131,5 @@ fun LoginScreen(
             FreebiesLoadingIndicator()
         }
     }
+
 }

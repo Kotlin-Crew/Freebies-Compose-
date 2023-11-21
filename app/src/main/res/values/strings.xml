@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Freebies</string>
-    <string name="user">USER </string>
+    <string name="user">USER</string>
     <string name="login">LOGIN</string>
     <string name="register">REGISTER</string>
     <string name="email">EMAIL</string>
@@ -12,4 +12,5 @@
     <string name="login_button">Login</string>
     <string name="not_member">Not a Member?</string>
     <string name="sign_up">Sign Up</string>
+    <string name="are_you_member">Are you a member?</string>
 </resources>

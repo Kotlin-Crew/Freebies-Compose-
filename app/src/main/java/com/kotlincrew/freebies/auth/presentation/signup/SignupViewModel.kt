@@ -1,63 +1,57 @@
-package com.kotlincrew.freebies.auth.presentation.login
+package com.kotlincrew.freebies.auth.presentation.signup
 
-import android.preference.PreferenceManager
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kotlincrew.freebies.auth.domain.usecase.LoginUseCases
 import com.kotlincrew.freebies.auth.domain.usecase.PasswordResult
+import com.kotlincrew.freebies.auth.domain.usecase.SetRememberAccountUseCase
+import com.kotlincrew.freebies.auth.domain.usecase.SignupUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
-    private val loginUseCases: LoginUseCases
+class SignupViewModel @Inject constructor(
+    private val signupUseCases: SignupUseCases,
 ) : ViewModel() {
-    var state by mutableStateOf(LoginState())
+    var state by mutableStateOf(SignupState())
         private set
 
-    fun onEvent(event: LoginEvent) {
+    fun onEvent(event: SignupEvent) {
         when (event) {
-            is LoginEvent.EmailChange -> {
+            is SignupEvent.EmailChange -> {
                 state = state.copy(
                     email = event.email
                 )
             }
 
-            LoginEvent.Login -> {
-                login()
-            }
-
-            is LoginEvent.PasswordChange -> {
+            is SignupEvent.PasswordChange -> {
                 state = state.copy(
                     password = event.password
                 )
             }
 
-            is LoginEvent.RememberChange -> {
-                state = state.copy(
-                    remember = event.remember
-                )
+            SignupEvent.SignUp -> {
+                signUp()
             }
         }
     }
 
-    private fun login() {
+    private fun signUp() {
         //reset values
         state = state.copy(
             emailError = null,
             passwordError = null
         )
-        if (!loginUseCases.validateEmailUseCase(state.email)) {
+        if (!signupUseCases.validateEmailUseCase(state.email)) {
             state = state.copy(
                 emailError = "The email is not valid"
             )
         }
-        val passwordResult = loginUseCases.validatePasswordUseCase(state.password)
+        val passwordResult = signupUseCases.validatePasswordUseCase(state.password)
         if (passwordResult is PasswordResult.Invalid) {
             state = state.copy(
                 passwordError = passwordResult.errorMessage
@@ -68,11 +62,11 @@ class LoginViewModel @Inject constructor(
                 isLoading = true
             )
             viewModelScope.launch(Dispatchers.IO) {
-                loginUseCases.loginWithEmailUseCase(state.email, state.password).onSuccess {
+                signupUseCases.signupWithEmailUseCase(state.email, state.password).onSuccess {
                     state = state.copy(
-                        isLoogedIn = true
+                        isSignedIn = true
                     )
-                    loginUseCases.setRememberAccount(state.remember)
+                    signupUseCases.setRememberAccount(true)
                 }.onFailure {
                     val error = it.message
                     state = state.copy(

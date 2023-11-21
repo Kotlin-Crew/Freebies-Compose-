@@ -21,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private val viewmodel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -32,10 +33,19 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavigationHost(
                         navHostController = navController,
-                        startDestination = NavigationRoute.Login
+                        startDestination = getStartDestination()
                     )
                 }
             }
         }
     }
+
+    private fun getStartDestination(): NavigationRoute {
+        return if (viewmodel.isLoggedIn && viewmodel.isRememberChecked) {
+            return NavigationRoute.Home
+        }else{
+            NavigationRoute.Login
+        }
+    }
+
 }
