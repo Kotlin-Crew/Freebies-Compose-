@@ -97,5 +97,8 @@ dependencies {
     implementation("com.google.firebase:firebase-storage:20.3.0")
     implementation("com.google.firebase:firebase-crashlytics:18.6.0")
 
+    //IconsMaterial
+    implementation("androidx.compose.material:material-icons-extended:1.5.4")
+
 
 }
