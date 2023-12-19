@@ -89,6 +89,9 @@ dependencies {
     //Custom Status bar and navigation bar
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.17.0")
 
+    //Coil(load images)
+    implementation("io.coil-kt:coil-compose:2.4.0")
+
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
     implementation("com.google.firebase:firebase-analytics:21.5.0")
